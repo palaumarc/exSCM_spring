@@ -6,6 +6,8 @@
 package cat.meteo.exercise.commons.exception;
 
 import java.io.FileNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,12 +20,15 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  */
 
 @ControllerAdvice
-public class ExceptionControllerAdvice {
+public class GlobalExceptionController {
+
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
     
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseBody
     public HttpStatusMessage exception(Exception e) {
+        log.error("Excepció: " + e);
         return new HttpStatusMessage(HttpStatus.BAD_REQUEST.toString(), 
                                      e.getClass().getSimpleName(), 
                                      e.getMessage());
@@ -33,6 +38,7 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(FileNotFoundException.class)
     @ResponseBody
     public HttpStatusMessage fileNotFoundException(Exception e) {
+        log.error("Excepció: " + e);
         return new HttpStatusMessage(HttpStatus.INTERNAL_SERVER_ERROR.toString(), 
                                      e.getClass().getSimpleName(), 
                                      e.getMessage());

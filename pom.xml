@@ -22,6 +22,35 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>${spring.version}</version>
+            <exclusions>
+                <!-- Exclude Jakarta Commons Logging in favor of SLF4j.
+                Commons Logging es la que fa servir Spring per defecte. 
+                Si volem veure el log d'spring jdbctemplate etc amb logback s'ha de fer aquest canvi -->
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        
+        <!-- Per migrar de Jakarta Commons Logging a Slf4j -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>1.7.2</version>
+            <scope>runtime</scope>
+        </dependency>
+        
+        <!-- logger: logback -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>1.0.9</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.0.9</version>
         </dependency>
         
         <dependency>
@@ -65,6 +94,23 @@
             <type>jar</type>
         </dependency>
     </dependencies>
+    
+    <!-- Perfils segons entorn de desplegament -->
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <targetenv>dev</targetenv>
+            </properties>
+        </profile>
+        <profile>
+            <id>proves</id>
+            <properties>
+                <targetenv>proves</targetenv>
+            </properties>
+        </profile>
+    </profiles>
+    
     <build>
         <plugins>
             <plugin>
