@@ -6,16 +6,21 @@
 package cat.meteo.exercise.api.dataaccess;
 
 import cat.meteo.exercise.api.model.metadades.Municipi;
+import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -26,24 +31,19 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class DaoMetadades {
     
-    private final String jsonFile = "/home/marc/Documents/exercici/material/metadades_municipis.json";
-    JsonReader reader = null;
-        
+    @Autowired
+    private Gson gson;
+    
+    @Value("${metadades_municipis}")
+    public String metadades_municipis;
+
     public List<Municipi> getAllMetadades() throws FileNotFoundException {
         
-        reader = new JsonReader(new InputStreamReader(new FileInputStream(jsonFile)));
-        List<Municipi> metadades = null;
+        InputStream inputStream = DaoMetadades.class.getClassLoader().getResourceAsStream(metadades_municipis);
+        BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
         
-        Gson myGson = new Gson();
-        JsonParser jsonParser = new JsonParser();
-        JsonArray predJsonArray = jsonParser.parse(reader).getAsJsonArray();
-
-        metadades = new ArrayList<Municipi>();
-        for(JsonElement predJson : predJsonArray) {
-            Municipi mun = myGson.fromJson(predJson, Municipi.class);
-            metadades.add(mun);
-        }
+        List<Municipi> municipis = gson.fromJson(br, new TypeToken<List<Municipi>>(){}.getType());
         
-        return metadades;
+        return municipis;
     }
 }
