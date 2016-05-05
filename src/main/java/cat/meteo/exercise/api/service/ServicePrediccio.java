@@ -5,10 +5,8 @@
  */
 package cat.meteo.exercise.api.service;
 
-import cat.meteo.exercise.api.dataaccess.DaoMetadades;
 import cat.meteo.exercise.api.dataaccess.DaoPrediccio;
 import cat.meteo.exercise.api.model.dades.PrediccioMunicipi;
-import cat.meteo.exercise.api.model.metadades.Municipi;
 import java.io.FileNotFoundException;
 import java.util.List;
 import org.slf4j.Logger;
@@ -26,9 +24,6 @@ public class ServicePrediccio {
     
     @Autowired
     private DaoPrediccio daoPrediccio;
-    
-    @Autowired
-    private DaoMetadades daoMetadades;
     
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     
@@ -52,10 +47,5 @@ public class ServicePrediccio {
         
         log.debug("Predicció del municipi amb codi " + codiMunicipi + " seleccionada");
         return selectedPred;
-    }
-    
-    public List<Municipi> getMetadataMunicipis() throws FileNotFoundException {
-        log.debug("Metadades de tots els municipis obtinguda correctament");
-        return daoMetadades.getAllMetadades();
     }
 }

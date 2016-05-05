@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import cat.meteo.exercise.api.model.dades.PrediccioMunicipi;
 import cat.meteo.exercise.api.model.metadades.Municipi;
+import cat.meteo.exercise.api.service.ServiceMetadades;
 import cat.meteo.exercise.api.service.ServicePrediccio;
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -29,6 +30,10 @@ public class ControllerPrediccio {
     @Autowired
     private ServicePrediccio sPred;
     
+    @Autowired
+    private ServiceMetadades sMeta;
+    
+    
     @RequestMapping(method = RequestMethod.GET, value = "/{codiMunicipi}")
     @ResponseBody
     public PrediccioMunicipi getPrediccioMunicipi (@PathVariable("codiMunicipi") int codiMunicipi) throws FileNotFoundException, Exception {
@@ -40,6 +45,6 @@ public class ControllerPrediccio {
     @ResponseBody
     public List<Municipi> getMetadadesMunicipis () throws FileNotFoundException {
 
-        return sPred.getMetadataMunicipis();
+        return sMeta.getMetadataMunicipis();
     }
 }
