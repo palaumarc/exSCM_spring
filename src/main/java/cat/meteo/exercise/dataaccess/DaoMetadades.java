@@ -5,7 +5,7 @@
  */
 package cat.meteo.exercise.dataaccess;
 
-import cat.meteo.exercise.model.dades.PrediccioMunicipi;
+import cat.meteo.exercise.model.metadades.Municipi;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -24,25 +24,26 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public class DaoPrediccio {
+public class DaoMetadades {
     
-    private final String jsonFile = "/home/marc/Documents/exercici/material/prediccions_municipals.json";
+    private final String jsonFile = "/home/marc/Documents/exercici/material/metadades_municipis.json";
     JsonReader reader = null;
         
-    public List<PrediccioMunicipi> getAllPrediccions() throws FileNotFoundException {
+    public List<Municipi> getAllMetadades() throws FileNotFoundException {
         
         reader = new JsonReader(new InputStreamReader(new FileInputStream(jsonFile)));
+        List<Municipi> metadades = null;
         
         Gson myGson = new Gson();
         JsonParser jsonParser = new JsonParser();
         JsonArray predJsonArray = jsonParser.parse(reader).getAsJsonArray();
 
-        List<PrediccioMunicipi> prediccions = new ArrayList<PrediccioMunicipi>();
+        metadades = new ArrayList<Municipi>();
         for(JsonElement predJson : predJsonArray) {
-            PrediccioMunicipi pred = myGson.fromJson(predJson, PrediccioMunicipi.class);
-            prediccions.add(pred);
+            Municipi mun = myGson.fromJson(predJson, Municipi.class);
+            metadades.add(mun);
         }
         
-        return prediccions;
+        return metadades;
     }
 }

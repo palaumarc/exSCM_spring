@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import cat.meteo.exercise.model.PrediccioMunicipi;
+import cat.meteo.exercise.model.dades.PrediccioMunicipi;
+import cat.meteo.exercise.model.metadades.Municipi;
 import cat.meteo.exercise.service.ServicePrediccio;
+import java.io.FileNotFoundException;
+import java.util.List;
 
 /**
  *
@@ -28,8 +31,15 @@ public class ControllerPrediccio {
     
     @RequestMapping(method = RequestMethod.GET, value = "/{codiMunicipi}")
     @ResponseBody
-    public PrediccioMunicipi getPrediccioMunicipi (@PathVariable("codiMunicipi") int codiMunicipi) {
+    public PrediccioMunicipi getPrediccioMunicipi (@PathVariable("codiMunicipi") int codiMunicipi) throws FileNotFoundException {
 
         return sPred.getPrediccio(codiMunicipi);
+    }
+    
+    @RequestMapping(method = RequestMethod.GET, value = "/metadades")
+    @ResponseBody
+    public List<Municipi> getMetadadesMunicipis () throws FileNotFoundException {
+
+        return sPred.getMetadataMunicipis();
     }
 }

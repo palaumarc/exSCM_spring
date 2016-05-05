@@ -5,13 +5,12 @@
  */
 package cat.meteo.exercise.service;
 
+import cat.meteo.exercise.dataaccess.DaoMetadades;
 import cat.meteo.exercise.dataaccess.DaoPrediccio;
-import cat.meteo.exercise.model.PrediccioDia;
-import cat.meteo.exercise.model.PrediccioMunicipi;
+import cat.meteo.exercise.model.dades.PrediccioMunicipi;
+import cat.meteo.exercise.model.metadades.Municipi;
 import java.io.FileNotFoundException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,19 +25,14 @@ public class ServicePrediccio {
     @Autowired
     private DaoPrediccio daoPrediccio;
     
-    public PrediccioMunicipi getPrediccio(int codiMunicipi) {
+    @Autowired
+    private DaoMetadades daoMetadades;
+    
+    public PrediccioMunicipi getPrediccio(int codiMunicipi) throws FileNotFoundException {
         List<PrediccioMunicipi> prediccions = null;
         PrediccioMunicipi selectedPred = null;
         
-        try {
-            prediccions = daoPrediccio.getAllPrediccions();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(ServicePrediccio.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        if (prediccions == null) {
-            throw new RuntimeException();
-        }
+        prediccions = daoPrediccio.getAllPrediccions();
         
         for (PrediccioMunicipi pred : prediccions) {
             if (pred.getCodi() == codiMunicipi) {
@@ -48,5 +42,10 @@ public class ServicePrediccio {
         }
         
         return selectedPred;
+    }
+    
+    public List<Municipi> getMetadataMunicipis() throws FileNotFoundException {
+        
+        return daoMetadades.getAllMetadades();
     }
 }
