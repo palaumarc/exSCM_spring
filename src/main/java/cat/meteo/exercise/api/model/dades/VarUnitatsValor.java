@@ -3,22 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cat.meteo.exercise.model.dades;
+package cat.meteo.exercise.api.model.dades;
 
 /**
  *
  * @author marc
  */
-public class VarUnitatValor {
-    private String unitat;
+public class VarUnitatsValor {
+    private String unitats;
     private float valor;
 
-    public String getUnitat() {
-        return unitat;
+    public String getUnitats() {
+        return unitats;
     }
 
-    public void setUnitat(String unitat) {
-        this.unitat = unitat;
+    public void setUnitats(String unitats) {
+        this.unitats = unitats;
     }
 
     public float getValor() {
@@ -28,4 +28,6 @@ public class VarUnitatValor {
     public void setValor(float valor) {
         this.valor = valor;
     }
+    
+    
 }

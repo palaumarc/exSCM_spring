@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cat.meteo.exercise.dataaccess;
+package cat.meteo.exercise.api.dataaccess;
 
-import cat.meteo.exercise.model.metadades.Municipi;
+import cat.meteo.exercise.api.model.dades.PrediccioMunicipi;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -24,26 +24,25 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public class DaoMetadades {
+public class DaoPrediccio {
     
-    private final String jsonFile = "/home/marc/Documents/exercici/material/metadades_municipis.json";
+    private final String jsonFile = "/home/marc/Documents/exercici/material/prediccions_municipals.json";
     JsonReader reader = null;
         
-    public List<Municipi> getAllMetadades() throws FileNotFoundException {
+    public List<PrediccioMunicipi> getAllPrediccions() throws FileNotFoundException {
         
         reader = new JsonReader(new InputStreamReader(new FileInputStream(jsonFile)));
-        List<Municipi> metadades = null;
         
         Gson myGson = new Gson();
         JsonParser jsonParser = new JsonParser();
         JsonArray predJsonArray = jsonParser.parse(reader).getAsJsonArray();
 
-        metadades = new ArrayList<Municipi>();
+        List<PrediccioMunicipi> prediccions = new ArrayList<PrediccioMunicipi>();
         for(JsonElement predJson : predJsonArray) {
-            Municipi mun = myGson.fromJson(predJson, Municipi.class);
-            metadades.add(mun);
+            PrediccioMunicipi pred = myGson.fromJson(predJson, PrediccioMunicipi.class);
+            prediccions.add(pred);
         }
         
-        return metadades;
+        return prediccions;
     }
 }
