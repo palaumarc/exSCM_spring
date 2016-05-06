@@ -27,18 +27,15 @@ public class DaoMetadades {
     
     @Autowired
     private Gson gson;
-    
-    @Value("${metadades_municipis}")
-    private String metadades_municipis;
 
-    public List<Municipi> getAllMetadades() throws FileNotFoundException {
+    public List<Municipi> getAllMetadades(String pathToMetadadesFile) throws FileNotFoundException {
         
         List<Municipi> municipis = null;
         
-        InputStream inputStream = DaoMetadades.class.getClassLoader().getResourceAsStream(metadades_municipis);
+        InputStream inputStream = DaoMetadades.class.getClassLoader().getResourceAsStream(pathToMetadadesFile);
         
         if (inputStream == null) {
-            throw new FileNotFoundException(metadades_municipis + " does not exist");
+            throw new FileNotFoundException(pathToMetadadesFile + " does not exist");
         }
         
         BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
