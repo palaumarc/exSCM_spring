@@ -32,6 +32,7 @@ public class DaoMetadades {
     private String metadades_municipis;
 
     public List<Municipi> getAllMetadades() throws FileNotFoundException {
+        
         List<Municipi> municipis = null;
         
         InputStream inputStream = DaoMetadades.class.getClassLoader().getResourceAsStream(metadades_municipis);
