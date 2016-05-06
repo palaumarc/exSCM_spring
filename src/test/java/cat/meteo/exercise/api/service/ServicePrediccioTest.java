@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cat.meteo.exercise.api.dataaccess;
+package cat.meteo.exercise.api.service;
 
-import cat.meteo.exercise.api.model.metadades.Municipi;
+import cat.meteo.exercise.api.dataaccess.DaoPrediccio;
+import cat.meteo.exercise.api.model.dades.PrediccioMunicipi;
 import cat.meteo.exercise.commons.config.AppContextConfigTest;
 import java.io.FileNotFoundException;
-import java.util.List;
+import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,35 +27,33 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 @ContextConfiguration(
         loader = AnnotationConfigContextLoader.class,
         classes = {
-            DaoMetadades.class,
-            Municipi.class,
+            ServicePrediccio.class,
+            DaoPrediccio.class,
+            PrediccioMunicipi.class,
             AppContextConfigTest.class
         })
-public class DaoMetadadesTest {
+public class ServicePrediccioTest {
     
     @Autowired
-    private DaoMetadades daoMeta;
+    private ServicePrediccio sPred;
     
-    @Value("${metadata_municipis}")
-    private String validPath;
+    @Value("${valid_municipi_id}")
+    private int validId;
             
-    @Value("${invalid_metadata_municipis}")
-    private String invalidPath;
+    @Value("${invalid_municipi_id}")
+    private int invalidId;
+    
+    @Test (expected = IllegalArgumentException.class)  
+    public void testGetPrediccioInvalidId() throws Exception {
+        PrediccioMunicipi pred;
+        pred = sPred.getPrediccio(invalidId);
+    }
     
     @Test
-    public void testGetAllMetadades() throws Exception {
-        
-        List<Municipi> municipis = null;
-        municipis = daoMeta.getAllMetadades(validPath);
-        assertNotNull("Hash de metadades carregat correctament", municipis);
-    }
-    
-    @Test(expected = FileNotFoundException.class)  
-    public void testGetAllMetadadesFail() throws Exception {
-        
-        List<Municipi> municipis = null;
-        municipis = daoMeta.getAllMetadades(invalidPath);
-    }
-    
+    public void testGetPrediccioValidId() throws Exception {
+        PrediccioMunicipi pred;
+        pred = sPred.getPrediccio(validId);
+        assertNotNull("Predicció municipal carregada correctament", pred);
+    }   
     
 }

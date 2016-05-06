@@ -12,6 +12,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 /**
@@ -25,13 +26,16 @@ public class ServicePrediccio {
     @Autowired
     private DaoPrediccio daoPrediccio;
     
+    @Value("${prediccions_municipals}")
+    private String prediccions_municipals;
+    
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     
     public PrediccioMunicipi getPrediccio(int codiMunicipi) throws FileNotFoundException, IllegalArgumentException {
         List<PrediccioMunicipi> prediccions = null;
         PrediccioMunicipi selectedPred = null;
         
-        prediccions = daoPrediccio.getAllPrediccions();
+        prediccions = daoPrediccio.getAllPrediccions(prediccions_municipals);
         
         for (PrediccioMunicipi pred : prediccions) {
             if (pred.getCodi() == codiMunicipi) {

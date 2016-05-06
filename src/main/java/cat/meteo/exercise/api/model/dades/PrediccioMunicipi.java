@@ -16,11 +16,6 @@ public class PrediccioMunicipi {
     private int codi;
     private List<PrediccioDia> dies;
 
-    public PrediccioMunicipi(int codiMunicipi, List<PrediccioDia> prediccions) {
-        this.codi = codiMunicipi;
-        this.dies = prediccions;
-    }
-
     public int getCodi() {
         return codi;
     }

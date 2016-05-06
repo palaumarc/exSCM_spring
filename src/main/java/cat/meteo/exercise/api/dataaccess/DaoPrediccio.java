@@ -28,17 +28,14 @@ public class DaoPrediccio {
     @Autowired
     private Gson gson;
     
-    @Value("${prediccions_municipals}")
-    private String prediccions_municipals;
-    
-    public List<PrediccioMunicipi> getAllPrediccions() throws FileNotFoundException {
+    public List<PrediccioMunicipi> getAllPrediccions(String pathToPrediccionsFile) throws FileNotFoundException {
         
         List<PrediccioMunicipi> prediccions;
         
-        InputStream inputStream = DaoPrediccio.class.getClassLoader().getResourceAsStream(prediccions_municipals);
+        InputStream inputStream = DaoPrediccio.class.getClassLoader().getResourceAsStream(pathToPrediccionsFile);
         
         if (inputStream == null) {
-            throw new FileNotFoundException(prediccions_municipals + " does not exist");
+            throw new FileNotFoundException(pathToPrediccionsFile + " does not exist");
         }
         
         BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
