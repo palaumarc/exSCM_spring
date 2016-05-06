@@ -8,8 +8,11 @@ package cat.meteo.exercise.api.dataaccess;
 import cat.meteo.exercise.api.model.dades.PrediccioMunicipi;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
@@ -29,14 +32,20 @@ public class DaoPrediccio {
     private Gson gson;
     
     @Value("${prediccions_municipals}")
-    public String prediccions_municipals;
+    private String prediccions_municipals;
     
     public List<PrediccioMunicipi> getAllPrediccions() throws FileNotFoundException {
         
+        List<PrediccioMunicipi> prediccions;
+        
         InputStream inputStream = DaoPrediccio.class.getClassLoader().getResourceAsStream(prediccions_municipals);
+        
+        if (inputStream == null) {
+            throw new FileNotFoundException(prediccions_municipals + " does not exist");
+        }
+        
         BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
-
-        List<PrediccioMunicipi> prediccions = gson.fromJson(br, new TypeToken<List<PrediccioMunicipi>>(){}.getType());
+        prediccions = gson.fromJson(br, new TypeToken<List<PrediccioMunicipi>>(){}.getType());
 
         return prediccions;
     }

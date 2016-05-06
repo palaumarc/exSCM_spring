@@ -27,7 +27,7 @@ public class ServicePrediccio {
     
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     
-    public PrediccioMunicipi getPrediccio(int codiMunicipi) throws FileNotFoundException, Exception {
+    public PrediccioMunicipi getPrediccio(int codiMunicipi) throws FileNotFoundException, IllegalArgumentException {
         List<PrediccioMunicipi> prediccions = null;
         PrediccioMunicipi selectedPred = null;
         
