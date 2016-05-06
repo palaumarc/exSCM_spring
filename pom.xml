@@ -104,14 +104,19 @@
             </properties>
         </profile>
         <profile>
-            <id>proves</id>
+            <id>pro</id>
             <properties>
-                <targetenv>proves</targetenv>
+                <targetenv>pro</targetenv>
             </properties>
         </profile>
     </profiles>
     
     <build>
+        
+        <filters>
+            <filter>src/main/resources/filter/filter.${targetenv}.properties</filter>
+        </filters>
+        
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -119,6 +124,26 @@
                 <version>2.3</version> 
                 <configuration>
                     <webXml>src/main/webapp/WEB-INF/web.xml</webXml>
+                    <webResources>
+                        
+                        <!-- Filtrem logback.xml -->
+                        <resource>
+                            <!--
+                            Maven filtrará contenido del directorio 'src/main/resources', concretamente usará el filtro definido 
+                            previamente para rellenar el archivo 'logback.xml', con los valores de las variables del archivo
+                            'config.${targetenv}.properties'.
+                            Una vez filtra el archivo, lo meterá en el directorio especificado como destino: WEB-INF/classes
+                            -->
+                            <directory>${basedir}/src/main/resources</directory>
+                            <filtering>true</filtering>
+                            <includes>
+                                <include>**/logback.xml</include>
+                                <include>**/Global.properties</include>                                
+                            </includes>
+                            <targetPath>WEB-INF/classes</targetPath>
+                        </resource>
+
+                    </webResources>
                 </configuration>
             </plugin>
         </plugins>
