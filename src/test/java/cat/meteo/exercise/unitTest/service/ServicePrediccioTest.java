@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cat.meteo.exercise.api.service;
+package cat.meteo.exercise.unitTest.service;
 
 import cat.meteo.exercise.api.dataaccess.DaoPrediccio;
 import cat.meteo.exercise.api.model.dades.PrediccioMunicipi;
+import cat.meteo.exercise.api.service.ServicePrediccio;
 import cat.meteo.exercise.commons.config.AppContextConfigTest;
-import java.io.FileNotFoundException;
 import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
 import org.junit.runner.RunWith;
