@@ -45,11 +45,11 @@ public class ServicePrediccio {
         }
         
         if (selectedPred == null) {
-            log.error("[ServicePrediccio] Error seleccionant predicció de municipi: codi no vàlid");
+            log.error("Error seleccionant predicció de municipi: codi no vàlid");
             throw new IllegalArgumentException("Codi de municipi no vàlid");
         }
         
-        log.debug("[ServicePrediccio] Predicció del municipi amb codi " + codiMunicipi + " seleccionada");
+        log.debug("Predicció del municipi amb codi " + codiMunicipi + " seleccionada");
         return selectedPred;
     }
 }

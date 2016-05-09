@@ -1,14 +1,17 @@
 package cat.meteo.exercise.integrationTest;
 
 import static com.jayway.restassured.RestAssured.given;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author marc
  */
-public class TestCalls {
+
+@Component
+public class TestRestAPICaller {
     
-    public static void doGet(String resource, int port, int expectedStatus) {
+    public void doGet(String resource, int port, int expectedStatus) {
         given().
                 port(port).
         when().

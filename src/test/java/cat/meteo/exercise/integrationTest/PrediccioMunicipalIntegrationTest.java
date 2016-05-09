@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ContextConfiguration;
@@ -26,11 +27,14 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
         loader = AnnotationConfigContextLoader.class,
         classes = {
             PrediccioMunicipalIntegrationTest.class,
-            TestCalls.class,
+            TestRestAPICaller.class,
             AppContextConfigTest.class
         })
 public class PrediccioMunicipalIntegrationTest {
    
+    @Autowired
+    private TestRestAPICaller caller;
+    
     @Value("${restapi_test_port}")
     private int port;
     
@@ -45,19 +49,19 @@ public class PrediccioMunicipalIntegrationTest {
     @Test
     public void testMunicipisMetadades() {
         log.debug("## Executing testMuncipisMetadades ##");
-        TestCalls.doGet("/municipis/metadades", port, HttpStatus.OK.value());
+        caller.doGet("/municipis/metadades", port, HttpStatus.OK.value());
     }
     
     @Test
     public void testPrediccionsValidId() {
         log.debug("## Executing testPrediccionsValidId ##");
-        TestCalls.doGet("/municipis/" + validId, port, HttpStatus.OK.value());
+        caller.doGet("/municipis/" + validId, port, HttpStatus.OK.value());
     }
     
     @Test
     public void testPrediccionsInvalidId() {
         log.debug("## Executing testPrediccionsInvalidId ##");
-        TestCalls.doGet("/municipis/" + invalidId, port, HttpStatus.BAD_REQUEST.value());
+        caller.doGet("/municipis/" + invalidId, port, HttpStatus.BAD_REQUEST.value());
     }
     
 }

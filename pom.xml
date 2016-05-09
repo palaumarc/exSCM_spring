@@ -174,7 +174,7 @@
                     <excludes>
                         <!-- excluyo tests de todas las apis ya que es necesario ejecutarlos una vez la 
                         aplicación está desplegada -->
-                        <exclude>cat/meteo/exercise/urlcalls/UrlCallsPrediccioTest.java</exclude>
+                        <exclude>cat/meteo/exercise/integrationTest/*</exclude>
                     </excludes>
                 </configuration>
             </plugin>
